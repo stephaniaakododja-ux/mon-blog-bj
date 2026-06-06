@@ -3,6 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\PasswordController;
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
+});
 
 // 🏠 Accueil
 Route::get('/', [PostController::class, 'index'])->name('home');

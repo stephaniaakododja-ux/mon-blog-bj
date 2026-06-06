@@ -37,31 +37,33 @@
 
         {{-- Actions - calées à droite --}}
         <div class="w-1/4 flex items-center justify-end gap-4 text-xs font-bold uppercase tracking-widest">
-            @auth
-               @if(Auth::user()->is_admin)
-    <a href="{{ route('admin.stat') }}"
-       class="hover:text-[#d97706] transition-colors">
-        Stats
-    </a>
-    <a href="{{ route('admin.draft') }}" class="hover:text-[#d97706] transition-colors">
-    Brouillons
-</a>
-<a href="{{ route('admin.message') }}" class="hover:text-[#d97706] transition-colors">Messages</a>
-    <a href="{{ route('posts.create') }}"
-       class="bg-[#d97706] text-white px-3 py-1.5 rounded-md hover:bg-[#b45309] transition-colors">
-        + Créer
-    </a>
-@endif
-                <form method="POST" action="{{ route('logout') }}" class="inline">
-                    @csrf
-                    <button type="submit" class="hover:text-red-400 transition-colors">Déconnexion</button>
-                </form>
-            @else
-    
-    
+    @auth
+    @if(Auth::user()->is_admin)
+        {{-- Menu déroulant Admin --}}
+        <div class="relative group">
+            <button class="hover:text-[#d97706] transition-colors flex items-center gap-1">
+                Admin ▾
+            </button>
+            <div class="absolute right-0 top-full mt-1 bg-[#451a03] rounded-xl shadow-lg py-2 w-44 hidden group-hover:block z-50">
+                <a href="{{ route('admin.stat') }}" class="block px-4 py-2 text-xs hover:text-[#d97706] transition-colors">📊 Statistiques</a>
+                <a href="{{ route('admin.draft') }}" class="block px-4 py-2 text-xs hover:text-[#d97706] transition-colors">📝 Brouillons</a>
+                <a href="{{ route('admin.message') }}" class="block px-4 py-2 text-xs hover:text-[#d97706] transition-colors">✉️ Messages</a>
+                <div class="border-t border-white/10 my-1"></div>
+                <a href="{{ route('posts.create') }}" class="block px-4 py-2 text-xs hover:text-[#d97706] transition-colors">✍️ Nouvel article</a>
+            </div>
+        </div>
+    @endif
+
+    <a href="/profile" class="hover:text-[#d97706] transition-colors">Mon profil</a>
+
+    <form method="POST" action="{{ route('logout') }}" class="inline">
+        @csrf
+        <button type="submit" class="hover:text-red-400 transition-colors">Déconnexion</button>
+    </form>
+@else
     <a href="{{ route('register') }}" class="hover:text-[#d97706] transition-colors">Inscription</a>
     <a href="{{ route('login') }}" class="hover:text-[#d97706] transition-colors">Connexion</a>
-            @endauth
+@endauth
         </div>
 
     </div>
